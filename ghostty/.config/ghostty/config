@@ -1,0 +1,24 @@
+# font-family = CartoGraphCF Nerd Font Mono
+# font-family = JetBrainsMono Nerd Font
+font-family = Maple Mono Semibold
+
+font-codepoint-map = U+ea60-U+ebeb,U+e0ca,U+e0cc-U+e0d4,U+e200-U+e2a9,U+e300-U+e3e3,U+e5fa-U+e6b1,U+e700-U+e7c5,U+f000-U+f2e0,U+f300-U+f372,U+f400-U+f532,U+f0001-U+f1af0 = Symbols Nerd Font Mono
+font-codepoint-map = U+e900 = icomoon
+
+font-size = 11
+adjust-cell-height = 40%
+
+background = "#24273a"
+
+custom-shader = ./gradient.glsl
+
+theme = catppuccin-macchiato
+
+background-opacity = 1
+
+title = "Ghostty 󰊠 "
+
+window-theme = "ghostty"
+
+window-padding-x = 10,10
+window-padding-y = 10,10
