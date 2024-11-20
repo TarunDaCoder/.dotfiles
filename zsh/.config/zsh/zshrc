@@ -1,0 +1,181 @@
+if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
+    ${GHOSTTY_RESOURCES_DIR}/shell-integration/zsh/ghostty-integration
+fi
+
+# Make graphs work with wsl
+export LESSCHARSET="utf-8"
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="false"
+
+plugins=(
+  zsh-autosuggestions
+  fzf-zsh-plugin
+  git
+  zsh-syntax-highlighting
+  zoxide
+  asdf
+)
+
+source $ZDOTDIR/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source $ZDOTDIR/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source $ZDOTDIR/.zsh/plugins/zoxide/zoxide-zsh-completion.plugin.zsh
+source $ZDOTDIR/.zsh/plugins/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
+source $ZDOTDIR/.zsh/plugins/git/git.plugin.zsh
+source $ZDOTDIR/.zsh/plugins/transient_prompt/transient_prompt.plugin.zsh
+
+
+# ALIASES ======================================================================
+
+# Wezterm config
+alias wezconf="nvim /mnt/c/Users/kumar/.wezterm.lua"
+
+# Zellij alias
+alias zj="zellij"
+
+# Lazygit alias
+alias lg="lazygit"
+
+# Nvim alias
+alias v="nvim"
+
+# Eza alias
+alias ls="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias la="eza --all --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias lt="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions --tree"
+
+# change clear to cl
+alias cl="clear"
+
+# alias zsource to source .zshrc
+alias zsource="source $ZDOTDIR/.zshrc"
+
+# jj aliases
+alias lj="lazyjj"
+
+# edit zshrc
+alias zshrc="nvim $ZDOTDIR/zshrc"
+
+# batcat to cat
+alias cat="batcat"
+
+# vscode
+alias code="code-insiders"
+
+# kitty config
+alias kc="v ~/.config/kitty/kitty.conf"
+
+alias ..="cd .."
+
+# EVALS ============================================
+
+# Eval starship (prompt)
+eval "$(starship init zsh)"
+
+# Eval zoxide (better cd)
+eval "$(zoxide init zsh)"
+
+# Exports
+export LIBGL_ALWAYS_INDIRECT=1
+export PATH="$HOME/.local/bin":$PATH
+export PATH="$HOME/.config/emacs/bin":$PATH
+export PROMPT_EOL_MARK="⏎"
+export PATH="$HOME/.cargo/bin":$PATH
+export PATH="$HOME/.cargo.env":$PATH
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+export PATH="$PATH:/home/tarun/.local/share/bob/nvim-bin"
+export PATH="$PATH:/home/tarun/dev/github/lua-language-server/bin"
+export PATH="$PATH:/snap/zig/current"
+export PATH="$PATH:/snap/marksman/current"
+export PATH="$PATH:/home/tarun/dev/github/ghostty/zig-out/bin"
+export PATH="$PATH:/home/tarun/dev/github/superhtml/zig-out/bin"
+export LANG=en_US.UTF-8
+export EDITOR='nvim'
+export GTK_THEME=Adwaita:dark
+export ZDOTDIR="$HOME/.config/zsh/"
+
+# Enable neofetch on startup
+# nerdfetch
+# neofetch
+fastfetch
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# fzf init
+source <(fzf --zsh)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+
+# Style completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+
+# jj setup
+source <(jj util completion zsh)
+
+# npm stuff
+NPM_PACKAGES="${HOME}/.npm-packages"
+
+export PATH="$PATH:$NPM_PACKAGES/bin"
+
+# Preserve MANPATH if you already defined it somewhere in your config.
+# Otherwise, fall back to `manpath` so we can inherit from `/etc/manpath`.
+export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
+
+# Yazi quick start
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias lvim="NVIM_APPNAME=lazyvim nvim"
+alias nvchad="NVIM_APPNAME=nvchad nvim"
+alias avim="NVIM_APPNAME=astronvim nvim"
+
+echo -ne '\e[5 q'
+
+function nvims() {
+  items=("nvim" "lazyvim" "nvchad" "astronvim" "PoloVim")
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "nvim" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config nvim $@
+}
+
+bindkey -s ^b "nvims\n"
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+
+alias luamake="/home/tarun/lua-language-server/3rd/luamake/luamake"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
