@@ -1,0 +1,266 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# =============================================================================================
+# New starship config
+# Minimal starship config
+# inspired by https://github.com/max397574/dotfiles/blob/main/starship.toml
+
+add_newline = true
+
+# format = "$all"
+
+format = """
+$username\
+$hostname\
+$localip\
+$shlvl\
+$singularity\
+$kubernetes\
+$directory\
+$vcsh\
+$fossil_branch\
+$fossil_metrics\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$pijul_channel\
+$docker_context\
+$package\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$terraform\
+$typst\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$nix_shell\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$direnv\
+$env_var\
+$crystal\
+$custom\
+$sudo\
+$cmd_duration\
+$fill\
+$time\
+$line_break\
+$jobs\
+$battery\
+$status\
+$os\
+$container\
+$shell\
+\n$character"""
+
+# right_format = """$time$battery"""
+
+command_timeout = 9999
+
+palette = "catppuccin"
+
+[fill]
+symbol = " "
+
+[line_break]
+disabled = true
+
+[palettes.catppuccin]
+black = "#1a1c2b"
+
+[username]
+style_user = "fg:red bg:black"
+format = "[](fg:black bg:none)[  $user]($style)[](fg:black bg:none)"
+show_always = true
+
+[hostname]
+ssh_only = false
+format = "[](fg:black bg:none)[󰌢  $hostname]($style)[](fg:black bg:none)"
+trim_at = "-"
+style = "fg:green bg:black"
+disabled = false
+
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󱟤 "
+unknown_symbol = "󰂑 "
+disabled = false
+format = " [](fg:black bg:none)[$symbol ]($style)[$percentage]($style)[](fg:black bg:none)"
+
+[[battery.display]]
+style = "fg:red bg:black"
+threshold=100
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+vicmd_symbol = "[](bold green)"
+
+[cmd_duration]
+format = "[](bg:none fg:black)[  $duration]($style)[](bg:none fg:black)"
+style = "fg:yellow bg:black"
+
+[directory]
+format = "[](bg:none fg:black)[󰉋  ]($style)[$path]($style)[](bg:none fg:black) [( [$read_only]($read_only_style))](bg:none fg:bold black)"
+style = "fg:cyan bg:black"
+read_only_style = "fg:red bg:black"
+read_only = "⨯ read"
+
+[package]
+format = "[](bg:black fg:black)[$symbol $version]($style)[](bg:black fg:black) "
+style = "fg:cyan bg:black"
+symbol = "Ξ"
+
+[git_branch]
+format = "[](fg:black)[$symbol $branch]($style)[](fg:black) "
+style = "fg:purple bg:black"
+symbol = " "
+
+[git_status]
+format="[](fg:black)[ ]($style)[$modified]($style)[$untracked]($style)[$staged]($style)[$renamed]($style)[](fg:black) "
+style = "fg:blue bg:black"
+conflicted = "="
+ahead =	"⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count} "
+modified = "!${count} "
+staged = "+${count} "
+renamed = "»${count} "
+deleted = "✘${count} "
+disabled = false
+
+[time]
+style="fg:purple bg:black"
+format = "[](fg:black)[ ]($style)[$time]($style)[](fg:black) "
+time_format = "%R"
+use_12hr = true
+utc_time_offset = "5.50"
+disabled = false
+
+[nodejs]
+format = "[](fg:black)[$symbol $version]($style)[](fg:black) "
+style = "fg:green bg:black"
+symbol = " "
+
+[lua]
+format = "[](fg:black)[$symbol $version]($style)[](fg:black) "
+style = "fg:blue bg:black"
+symbol = " "
+
+[rust]
+format = "[](fg:black)[$symbol $version]($style)[](fg:black) "
+style = "fg:red bg:black"
+symbol = " "
+
+[python]
+format = "[](fg:black)[$symbol $version]($style)[](fg:black) "
+style = "bg:black fg:yellow"
+symbol = " "
+
+[zig]
+format = "[](fg:black)[$symbol $version]($style)[](fg:black) "
+style = "bg:black fg:yellow"
+symbol = " "
+
+[cmake]
+format = "[](fg:black)[$symbol $version]($style)[](fg:black) "
+style = "bg:black fg:blue"
+symbol = " "
+
+# MY CONFIG ENDS
+# ==========================================================================================
+
+# Inserts a blank line between shell prompts
+# add_newline = true
+#
+# [character] 
+# success_symbol = "[❯](purple)"
+# error_symbol = "[❯](red)"
+# vicmd_symbol = "[❮](green)"
+#
+# [directory]
+# truncation_length = 0
+# truncate_to_repo = false
+#
+# [git_branch]
+# symbol = " "
+# format = "[$symbol$branch]($style) "
+# style = "bright-black"
+#
+# [git_status]
+# format = '([\[$all_status$ahead_behind\]]($style) )'
+# style = "cyan"
+#
+# [git_state]
+# format = '\([$state( $progress_current/$progress_total)]($style)\) '
+# style = "bright-black"
+#
+# [git_metrics]
+# disabled = false
+#
+# [cmd_duration]
+# format = "[$duration]($style)"
+# style = "yellow"
+#
+# [memory_usage]
+# symbol = "󰍛 "
+#
+# [rust]
+# symbol = " "
+
+# Attempt to mimic siduck's prompt =========================================================
+# add_newline = true
+#
+# format = "$directory"
+#
+# [directory]
+# format = "[ 󰀘  ](fg:#1a2131 bg:#bae6fd )[ $path ](fg:white bg:#1e2030) "
